@@ -1,0 +1,11 @@
+--- openssl-1.0.1e/crypto/x509/x509_vfy.c.before_trusted_first_always	2021-10-02 20:36:02.613066113 +0200
++++ openssl-1.0.1e/crypto/x509/x509_vfy.c	2021-10-02 20:37:06.890422274 +0200
+@@ -206,7 +206,7 @@
+ 		/* If we are self signed, we break */
+ 		if (ctx->check_issued(ctx, x,x)) break;
+ 		/* If asked see if we can find issuer in trusted store first */
+-		if (ctx->param->flags & X509_V_FLAG_TRUSTED_FIRST)
++		if (/* PATCH TRUSTED FIRST ALWAYS - ctx->param->flags & */ X509_V_FLAG_TRUSTED_FIRST)
+ 			{
+ 			ok = ctx->get_issuer(&xtmp, ctx, x);
+ 			if (ok < 0)
